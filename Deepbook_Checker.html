@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sui VietNam Community - DeepBook Airdrop Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap");
+      body {
+        background: #020617;
+        color: #f8fafc;
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .glass {
+        background: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .btn-select {
+        background: #0f172a;
+        border: 1px solid #1e293b;
+        transition: all 0.2s;
+        color: #64748b;
+      }
+      .btn-select.active {
+        background: #06b6d4;
+        border-color: #22d3ee;
+        color: #020617;
+        font-weight: 800;
+        box-shadow: 0 0 15px rgba(34, 211, 238, 0.4);
+      }
+      .btn-gradient {
+        background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #1e293b;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body class="p-4 md:p-8">
+    <div class="max-w-5xl mx-auto">
+      <div
+        class="flex flex-col md:flex-row justify-between items-center mb-10 gap-6 pb-6 border-b border-white/5"
+      >
+        <div class="flex items-center gap-5">
+          <img
+            src="https://pbs.twimg.com/media/GtPpn5JWwAANuk6.jpg"
+            alt="DeepBook"
+            class="w-16 h-16 rounded-2xl shadow-2xl"
+          />
+          <div>
+            <h1
+              class="text-4xl font-extrabold tracking-tighter italic leading-none text-white uppercase"
+            >
+              Deep<span class="text-cyan-400">Book</span>
+            </h1>
+            <p
+              class="text-slate-500 text-[10px] font-bold uppercase tracking-[0.4em] mt-2 italic"
+            >
+              Airdrop Calculator
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="flex items-center gap-4 bg-slate-900/50 px-6 py-3 rounded-2xl border border-white/10 shadow-lg"
+        >
+          <div class="text-right hidden md:block">
+            <p
+              class="text-[9px] text-cyan-500 font-black uppercase tracking-[0.2em] mb-1"
+            ></p>
+            <p class="text-sm font-black text-cyan-300 tracking-tight italic">
+              Sui VietNam Community
+            </p>
+          </div>
+          <img
+            src="https://i.postimg.cc/RFgdS32B/Logo-(1).png"
+            alt="Sui VietNam Community"
+            class="w-12 h-12 rounded-full border-2 border-cyan-500/20 p-0.5 bg-[#020617] object-cover"
+          />
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <div
+          class="glass p-6 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8"
+        >
+          <div>
+            <label
+              class="block text-[11px] font-bold text-cyan-500 mb-4 uppercase italic tracking-widest"
+              >1. Tổng cung Point dự kiến</label
+            >
+            <div class="grid grid-cols-2 gap-2">
+              <button
+                onclick="setSupply(12000000, this)"
+                class="btn-select py-3 rounded-xl text-xs active"
+              >
+                12 Triệu
+              </button>
+              <button
+                onclick="setSupply(13000000, this)"
+                class="btn-select py-3 rounded-xl text-xs"
+              >
+                13 Triệu
+              </button>
+              <button
+                onclick="setSupply(14000000, this)"
+                class="btn-select py-3 rounded-xl text-xs"
+              >
+                14 Triệu
+              </button>
+              <button
+                onclick="setSupply(15000000, this)"
+                class="btn-select py-3 rounded-xl text-xs"
+              >
+                15 Triệu
+              </button>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between items-center mb-4">
+              <label
+                class="text-[11px] font-bold text-cyan-500 uppercase italic tracking-widest"
+                >2. Tỷ lệ Airdrop (%)</label
+              >
+              <span
+                id="pct-label"
+                class="text-xs font-black text-white bg-cyan-950 px-3 py-1 rounded-lg border border-cyan-500/30"
+                >1%</span
+              >
+            </div>
+            <input
+              type="range"
+              id="airdrop-slider"
+              min="0.1"
+              max="5"
+              step="0.1"
+              value="1"
+              oninput="calculate()"
+              class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+            />
+          </div>
+        </div>
+
+        <div class="glass p-6 rounded-3xl">
+          <label
+            class="block text-[11px] font-bold text-cyan-500 mb-3 uppercase italic tracking-widest"
+            >3. Danh sách ví (0x...) hoặc Số Point</label
+          >
+          <textarea
+            id="input-data"
+            rows="5"
+            class="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 font-mono text-sm text-cyan-100 outline-none focus:border-cyan-500/50 transition-all custom-scrollbar"
+            placeholder="Nhập mỗi dữ liệu 1 dòng..."
+          ></textarea>
+          <button
+            onclick="handleCheck()"
+            id="btn-check"
+            class="w-full btn-gradient mt-4 py-4 rounded-xl font-black uppercase tracking-[0.2em] text-white shadow-lg active:scale-95 transition-all"
+          >
+            <i class="fa-solid fa-bolt mr-2"></i> Kiểm tra & Tính toán kết quả
+          </button>
+        </div>
+
+        <div class="glass rounded-3xl overflow-hidden border border-white/5">
+          <div
+            class="p-5 border-b border-white/5 flex justify-between items-center bg-white/5"
+          >
+            <h3
+              class="text-xs font-black uppercase tracking-widest text-white italic"
+            >
+              Chi tiết phân bổ dự kiến
+            </h3>
+            <div class="flex items-center gap-2">
+              <span
+                class="text-[10px] text-slate-500 font-bold uppercase italic"
+                >Giá live:</span
+              >
+              <span
+                id="live-price-label"
+                class="text-xs font-black text-green-400 font-mono"
+                >$0.032</span
+              >
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead
+                class="bg-slate-900/50 text-[10px] text-slate-500 uppercase font-black"
+              >
+                <tr>
+                  <th class="p-5">Hạng</th>
+                  <th class="p-5">Địa chỉ ví</th>
+                  <th class="p-5 text-right text-slate-300">Point hiện có</th>
+                  <th class="p-5 text-right text-cyan-400">Dự kiến $DEEP</th>
+                  <th class="p-5 text-right text-green-400">Giá trị ($)</th>
+                </tr>
+              </thead>
+              <tbody
+                id="result-table"
+                class="divide-y divide-white/5 font-mono text-[11px]"
+              >
+                <tr>
+                  <td
+                    colspan="5"
+                    class="p-10 text-center text-slate-700 italic"
+                  >
+                    Vui lòng nhập dữ liệu để bắt đầu...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-10 text-center pb-10">
+        <p
+          class="text-[10px] text-slate-700 font-black uppercase tracking-[0.5em] mb-2"
+        >
+          Powered By
+        </p>
+        <p class="text-sm font-black text-slate-500 italic uppercase">
+          Sui VietNam Community
+        </p>
+      </div>
+    </div>
+
+    <script>
+      let currentPrice = 0.032;
+      let selectedSupply = 12000000;
+      let lastData = [];
+      const TOTAL_DEEP = 10000000000;
+
+      async function fetchPrice() {
+        try {
+          const res = await fetch(
+            "https://api.coingecko.com/api/v3/simple/price?ids=deepbook&vs_currencies=usd"
+          );
+          const data = await res.json();
+          if (data.deepbook && data.deepbook.usd) {
+            currentPrice = data.deepbook.usd;
+            document.getElementById("live-price-label").innerText =
+              "$" + currentPrice.toFixed(4);
+            renderResults(lastData);
+          }
+        } catch (e) {}
+      }
+
+      function setSupply(val, btn) {
+        selectedSupply = val;
+        document
+          .querySelectorAll(".btn-select")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        renderResults(lastData);
+      }
+
+      function calculate() {
+        document.getElementById("pct-label").innerText =
+          document.getElementById("airdrop-slider").value + "%";
+        renderResults(lastData);
+      }
+
+      async function handleCheck() {
+        const input = document.getElementById("input-data").value.trim();
+        const lines = input.split(/[\n,;\s]+/).filter((l) => l.trim() !== "");
+        const btn = document.getElementById("btn-check");
+
+        btn.disabled = true;
+        btn.innerHTML =
+          '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Đang đồng bộ Cetus API...';
+
+        let dataList = [];
+        for (let item of lines) {
+          if (item.startsWith("0x")) {
+            try {
+              const res = await fetch(
+                `https://api-sui.cetus.zone/v3/sui/deepbookv3/points/self_rank?address=${item}`
+              );
+              const json = await res.json();
+              if (json.data) {
+                dataList.push({
+                  rank: json.data.rank,
+                  points: json.data.points,
+                  id: item,
+                });
+              } else {
+                dataList.push({ rank: "N/A", points: 0, id: item });
+              }
+            } catch (e) {
+              dataList.push({ rank: "Err", points: 0, id: item });
+            }
+          } else if (!isNaN(item)) {
+            dataList.push({
+              rank: "-",
+              points: parseInt(item),
+              id: "Manual Entry",
+            });
+          }
+        }
+        lastData = dataList;
+        renderResults(dataList);
+        btn.disabled = false;
+        btn.innerHTML =
+          '<i class="fa-solid fa-bolt mr-2"></i> Kiểm tra & Tính toán kết quả';
+      }
+
+      function renderResults(data) {
+        if (data.length === 0) return;
+        const pct = parseFloat(document.getElementById("airdrop-slider").value);
+        const rate = (TOTAL_DEEP * (pct / 100)) / selectedSupply;
+        const tbody = document.getElementById("result-table");
+
+        tbody.innerHTML = data
+          .map((item) => {
+            const tokens = item.points * rate;
+            const usdValue = tokens * currentPrice;
+            const displayId = item.id.startsWith("0x")
+              ? item.id.substring(0, 8) +
+                "..." +
+                item.id.substring(item.id.length - 4)
+              : item.id;
+
+            // .toLocaleString() cho số đẹp, .toFixed(1) để lấy 1 số thập phân cho giá trị USD
+            return `
+                    <tr class="hover:bg-cyan-500/5 transition-colors group text-right">
+                        <td class="p-5 font-bold text-slate-500 italic text-left">#${
+                          item.rank
+                        }</td>
+                        <td class="p-5 text-slate-400 font-bold group-hover:text-cyan-400 transition-colors text-left">${displayId}</td>
+                        <td class="p-5 font-black text-slate-300">${item.points.toLocaleString()}</td>
+                        <td class="p-5 font-black text-cyan-400 text-sm italic">${Math.round(
+                          tokens
+                        ).toLocaleString()}</td>
+                        <td class="p-5 font-black text-green-400 text-sm italic">$${usdValue.toLocaleString(
+                          undefined,
+                          { minimumFractionDigits: 1, maximumFractionDigits: 1 }
+                        )}</td>
+                    </tr>`;
+          })
+          .join("");
+      }
+
+      fetchPrice();
+    </script>
+  </body>
+</html>
