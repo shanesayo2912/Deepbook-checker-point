@@ -11,14 +11,52 @@
     />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap");
+      :root {
+        --primary: #06b6d4;
+        --bg-dark: #020617;
+      }
       body {
-        background: #020617;
+        background: var(--bg-dark);
         color: #f8fafc;
         font-family: "Plus Jakarta Sans", sans-serif;
+        overflow-x: hidden;
+      }
+      .bg-glow {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 15% 25%,
+            rgba(6, 182, 212, 0.12) 0%,
+            transparent 45%
+          ),
+          radial-gradient(
+            circle at 85% 75%,
+            rgba(59, 130, 246, 0.12) 0%,
+            transparent 45%
+          );
+        z-index: -1;
+        filter: blur(60px);
+      }
+      .bg-grid {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(
+            rgba(255, 255, 255, 0.02) 1px,
+            transparent 1px
+          ),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        background-size: 40px 40px;
+        z-index: -2;
       }
       .glass {
-        background: rgba(15, 23, 42, 0.8);
-        backdrop-filter: blur(12px);
+        background: rgba(15, 23, 42, 0.7);
+        backdrop-filter: blur(16px);
         border: 1px solid rgba(255, 255, 255, 0.05);
       }
       .btn-select {
@@ -50,14 +88,17 @@
     </style>
   </head>
   <body class="p-4 md:p-8">
+    <div class="bg-glow"></div>
+    <div class="bg-grid"></div>
+
     <div class="max-w-5xl mx-auto">
+      <!-- Header -->
       <div
         class="flex flex-col md:flex-row justify-between items-center mb-10 gap-6 pb-6 border-b border-white/5"
       >
         <div class="flex items-center gap-5">
           <img
             src="https://pbs.twimg.com/media/GtPpn5JWwAANuk6.jpg"
-            alt="DeepBook"
             class="w-16 h-16 rounded-2xl shadow-2xl"
           />
           <div>
@@ -73,27 +114,23 @@
             </p>
           </div>
         </div>
-
         <div
           class="flex items-center gap-4 bg-slate-900/50 px-6 py-3 rounded-2xl border border-white/10 shadow-lg"
         >
-          <div class="text-right hidden md:block">
-            <p
-              class="text-[9px] text-cyan-500 font-black uppercase tracking-[0.2em] mb-1"
-            ></p>
-            <p class="text-sm font-black text-cyan-300 tracking-tight italic">
-              Sui VietNam Community
-            </p>
-          </div>
+          <p
+            class="text-sm font-black text-cyan-300 tracking-tight italic hidden md:block"
+          >
+            Sui VietNam Community
+          </p>
           <img
             src="https://i.postimg.cc/RFgdS32B/Logo-(1).png"
-            alt="Sui VietNam Community"
             class="w-12 h-12 rounded-full border-2 border-cyan-500/20 p-0.5 bg-[#020617] object-cover"
           />
         </div>
       </div>
 
       <div class="space-y-6">
+        <!-- Settings -->
         <div
           class="glass p-6 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8"
         >
@@ -154,47 +191,175 @@
           </div>
         </div>
 
+        <!-- Quick Calculator -->
+        <div
+          class="glass p-8 rounded-3xl border-l-4 border-l-cyan-500 shadow-xl"
+        >
+          <div class="flex items-center gap-3 mb-6">
+            <i class="fa-solid fa-calculator text-cyan-400"></i>
+            <h2
+              class="text-xs font-black uppercase tracking-widest italic text-white"
+            >
+              TÍNH NHANH (QUICK LAB)
+            </h2>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-end">
+            <div>
+              <label
+                class="block text-[9px] font-bold text-slate-500 mb-2 uppercase italic tracking-widest"
+                >Nhập số Point</label
+              >
+              <input
+                type="number"
+                id="quick-input"
+                oninput="quickCalc()"
+                class="w-full bg-slate-950 border border-white/5 rounded-xl p-4 text-white font-black text-xl outline-none focus:border-cyan-500/30 transition-all"
+                placeholder="100"
+              />
+            </div>
+            <div class="lg:col-span-2 grid grid-cols-2 gap-4">
+              <div
+                class="bg-white/5 p-5 rounded-2xl border border-white/5 text-center"
+              >
+                <p
+                  class="text-[9px] font-bold text-slate-500 uppercase mb-1 italic"
+                >
+                  Sẽ nhận ($DEEP)
+                </p>
+                <p
+                  id="quick-token"
+                  class="text-2xl font-black text-white italic"
+                >
+                  0
+                </p>
+              </div>
+              <div
+                class="bg-white/5 p-5 rounded-2xl border border-white/5 text-center"
+              >
+                <p
+                  class="text-[9px] font-bold text-slate-500 uppercase mb-1 italic"
+                >
+                  Giá trị ước tính ($)
+                </p>
+                <p
+                  id="quick-usd"
+                  class="text-2xl font-black text-green-400 italic"
+                >
+                  $0
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wallet Input -->
         <div class="glass p-6 rounded-3xl">
           <label
             class="block text-[11px] font-bold text-cyan-500 mb-3 uppercase italic tracking-widest"
-            >3. Danh sách ví (0x...) hoặc Số Point</label
-          >
+            >3. Kiểm tra danh sách ví hàng loạt
+          </label>
           <textarea
             id="input-data"
             rows="5"
             class="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 font-mono text-sm text-cyan-100 outline-none focus:border-cyan-500/50 transition-all custom-scrollbar"
-            placeholder="Nhập mỗi dữ liệu 1 dòng..."
+            placeholder="Nhập ví 0x... mỗi dòng một ví"
           ></textarea>
           <button
             onclick="handleCheck()"
             id="btn-check"
             class="w-full btn-gradient mt-4 py-4 rounded-xl font-black uppercase tracking-[0.2em] text-white shadow-lg active:scale-95 transition-all"
           >
-            <i class="fa-solid fa-bolt mr-2"></i> Kiểm tra & Tính toán kết quả
+            <i class="fa-solid fa-bolt mr-2"></i> Check now
           </button>
         </div>
 
+        <!-- Summary Section -->
+        <div
+          id="summary-section"
+          class="hidden grid grid-cols-1 md:grid-cols-3 gap-4"
+        >
+          <div
+            class="glass p-6 rounded-2xl text-center border-b-2 border-b-slate-500"
+          >
+            <p
+              class="text-[9px] font-bold text-slate-500 uppercase mb-1 tracking-widest"
+            >
+              Tổng Point
+            </p>
+            <p id="total-points" class="text-2xl font-black text-white italic">
+              0
+            </p>
+          </div>
+          <div
+            class="glass p-6 rounded-2xl text-center border-b-2 border-b-cyan-500"
+          >
+            <p
+              class="text-[9px] font-bold text-cyan-500 uppercase mb-1 tracking-widest"
+            >
+              Tổng $DEEP
+            </p>
+            <p id="total-tokens" class="text-2xl font-black text-white italic">
+              0
+            </p>
+          </div>
+          <div
+            class="glass p-6 rounded-2xl text-center border-b-2 border-b-green-500"
+          >
+            <p
+              class="text-[9px] font-bold text-green-500 uppercase mb-1 tracking-widest"
+            >
+              Tổng Giá Trị $
+            </p>
+            <p id="total-usd" class="text-2xl font-black text-white italic">
+              $0
+            </p>
+          </div>
+        </div>
+
+        <!-- Results Table -->
         <div class="glass rounded-3xl overflow-hidden border border-white/5">
           <div
-            class="p-5 border-b border-white/5 flex justify-between items-center bg-white/5"
+            class="p-5 border-b border-white/5 flex flex-col md:flex-row justify-between items-center bg-white/5 gap-4"
           >
             <h3
               class="text-xs font-black uppercase tracking-widest text-white italic"
             >
               Chi tiết phân bổ dự kiến
             </h3>
-            <div class="flex items-center gap-2">
-              <span
-                class="text-[10px] text-slate-500 font-bold uppercase italic"
-                >Giá live:</span
-              >
-              <span
-                id="live-price-label"
-                class="text-xs font-black text-green-400 font-mono"
-                >$0.032</span
-              >
+
+            <!-- Custom Price Section -->
+            <div
+              class="flex items-center gap-4 bg-black/40 p-2 rounded-xl border border-white/5"
+            >
+              <div class="flex items-center gap-2">
+                <span
+                  class="text-[10px] text-slate-500 font-bold uppercase italic"
+                  >Giá Live:</span
+                >
+                <span
+                  id="live-price-label"
+                  class="text-xs font-black text-cyan-400 font-mono tracking-tighter"
+                  >$0.0320</span
+                >
+              </div>
+              <div class="h-4 w-[1px] bg-white/10"></div>
+              <div class="flex items-center gap-2">
+                <span
+                  class="text-[10px] text-green-500 font-bold uppercase italic"
+                  >Chỉnh giá:</span
+                >
+                <input
+                  type="number"
+                  id="custom-price"
+                  oninput="updateAll()"
+                  step="0.001"
+                  placeholder="Tự điền..."
+                  class="w-20 bg-slate-900 border border-white/10 rounded-lg px-2 py-1 text-xs font-black text-green-400 outline-none focus:border-green-500/50"
+                />
+              </div>
             </div>
           </div>
+
           <div class="overflow-x-auto">
             <table class="w-full text-left">
               <thead
@@ -203,8 +368,8 @@
                 <tr>
                   <th class="p-5">Hạng</th>
                   <th class="p-5">Địa chỉ ví</th>
-                  <th class="p-5 text-right text-slate-300">Point hiện có</th>
-                  <th class="p-5 text-right text-cyan-400">Dự kiến $DEEP</th>
+                  <th class="p-5 text-right text-slate-300">Point</th>
+                  <th class="p-5 text-right text-cyan-400">Tokens</th>
                   <th class="p-5 text-right text-green-400">Giá trị ($)</th>
                 </tr>
               </thead>
@@ -217,7 +382,7 @@
                     colspan="5"
                     class="p-10 text-center text-slate-700 italic"
                   >
-                    Vui lòng nhập dữ liệu để bắt đầu...
+                    Dán ví để bắt đầu kiểm tra...
                   </td>
                 </tr>
               </tbody>
@@ -239,24 +404,32 @@
     </div>
 
     <script>
-      let currentPrice = 0.032;
+      let livePrice = 0.032;
       let selectedSupply = 12000000;
       let lastData = [];
       const TOTAL_DEEP = 10000000000;
 
+      // Hàm lấy giá trị thực tế đang dùng (Ưu tiên giá tự nhập)
+      function getActivePrice() {
+        const customPrice = document.getElementById("custom-price").value;
+        return customPrice ? parseFloat(customPrice) : livePrice;
+      }
+
       async function fetchPrice() {
         try {
           const res = await fetch(
-            "https://api.coingecko.com/api/v3/simple/price?ids=deepbook&vs_currencies=usd"
+            `https://api.coingecko.com/api/v3/simple/price?ids=deepbook&vs_currencies=usd&t=${Date.now()}`
           );
           const data = await res.json();
           if (data.deepbook && data.deepbook.usd) {
-            currentPrice = data.deepbook.usd;
+            livePrice = data.deepbook.usd;
             document.getElementById("live-price-label").innerText =
-              "$" + currentPrice.toFixed(4);
-            renderResults(lastData);
+              "$" + livePrice.toFixed(4);
+            updateAll();
           }
-        } catch (e) {}
+        } catch (e) {
+          console.error("Lỗi API Price:", e);
+        }
       }
 
       function setSupply(val, btn) {
@@ -265,19 +438,46 @@
           .querySelectorAll(".btn-select")
           .forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
-        renderResults(lastData);
+        updateAll();
       }
 
       function calculate() {
         document.getElementById("pct-label").innerText =
           document.getElementById("airdrop-slider").value + "%";
-        renderResults(lastData);
+        updateAll();
       }
+
+      function quickCalc() {
+        const points =
+          parseFloat(document.getElementById("quick-input").value) || 0;
+        const pct = parseFloat(document.getElementById("airdrop-slider").value);
+        const rate = (TOTAL_DEEP * (pct / 100)) / selectedSupply;
+        const tokens = points * rate;
+        const usd = tokens * getActivePrice();
+
+        document.getElementById("quick-token").innerText =
+          Math.round(tokens).toLocaleString();
+        document.getElementById("quick-usd").innerText =
+          "$" +
+          usd.toLocaleString(undefined, {
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 2,
+          });
+      }
+
+      function updateAll() {
+        quickCalc();
+        if (lastData.length > 0) renderResults(lastData);
+      }
+
+      const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
       async function handleCheck() {
         const input = document.getElementById("input-data").value.trim();
         const lines = input.split(/[\n,;\s]+/).filter((l) => l.trim() !== "");
         const btn = document.getElementById("btn-check");
+
+        if (lines.length === 0) return;
 
         btn.disabled = true;
         btn.innerHTML =
@@ -286,6 +486,7 @@
         let dataList = [];
         for (let item of lines) {
           if (item.startsWith("0x")) {
+            await sleep(300); // Tránh bị khóa API
             try {
               const res = await fetch(
                 `https://api-sui.cetus.zone/v3/sui/deepbookv3/points/self_rank?address=${item}`
@@ -311,50 +512,70 @@
             });
           }
         }
+
         lastData = dataList;
+        document.getElementById("summary-section").classList.remove("hidden");
         renderResults(dataList);
         btn.disabled = false;
-        btn.innerHTML =
-          '<i class="fa-solid fa-bolt mr-2"></i> Kiểm tra & Tính toán kết quả';
+        btn.innerHTML = '<i class="fa-solid fa-bolt mr-2"></i> Check now';
       }
 
       function renderResults(data) {
-        if (data.length === 0) return;
         const pct = parseFloat(document.getElementById("airdrop-slider").value);
         const rate = (TOTAL_DEEP * (pct / 100)) / selectedSupply;
         const tbody = document.getElementById("result-table");
+        const currentActivePrice = getActivePrice();
+
+        let sumPoints = 0,
+          sumTokens = 0,
+          sumUsd = 0;
 
         tbody.innerHTML = data
           .map((item) => {
             const tokens = item.points * rate;
-            const usdValue = tokens * currentPrice;
+            const usdValue = tokens * currentActivePrice;
+            sumPoints += item.points;
+            sumTokens += tokens;
+            sumUsd += usdValue;
+
             const displayId = item.id.startsWith("0x")
               ? item.id.substring(0, 8) +
                 "..." +
                 item.id.substring(item.id.length - 4)
               : item.id;
 
-            // .toLocaleString() cho số đẹp, .toFixed(1) để lấy 1 số thập phân cho giá trị USD
             return `
-                    <tr class="hover:bg-cyan-500/5 transition-colors group text-right">
-                        <td class="p-5 font-bold text-slate-500 italic text-left">#${
-                          item.rank
-                        }</td>
-                        <td class="p-5 text-slate-400 font-bold group-hover:text-cyan-400 transition-colors text-left">${displayId}</td>
-                        <td class="p-5 font-black text-slate-300">${item.points.toLocaleString()}</td>
-                        <td class="p-5 font-black text-cyan-400 text-sm italic">${Math.round(
-                          tokens
-                        ).toLocaleString()}</td>
-                        <td class="p-5 font-black text-green-400 text-sm italic">$${usdValue.toLocaleString(
-                          undefined,
-                          { minimumFractionDigits: 1, maximumFractionDigits: 1 }
-                        )}</td>
-                    </tr>`;
+            <tr class="hover:bg-cyan-500/5 transition-colors group">
+                <td class="p-5 font-bold text-slate-500 italic">#${
+                  item.rank
+                }</td>
+                <td class="p-5 text-slate-400 font-bold group-hover:text-cyan-400 transition-colors uppercase tracking-tighter">${displayId}</td>
+                <td class="p-5 font-black text-slate-300 text-right">${item.points.toLocaleString()}</td>
+                <td class="p-5 font-black text-cyan-400 text-sm italic text-right">${Math.round(
+                  tokens
+                ).toLocaleString()}</td>
+                <td class="p-5 font-black text-green-400 text-sm italic text-right">$${usdValue.toLocaleString(
+                  undefined,
+                  { minimumFractionDigits: 1, maximumFractionDigits: 2 }
+                )}</td>
+            </tr>`;
           })
           .join("");
+
+        document.getElementById("total-points").innerText =
+          sumPoints.toLocaleString();
+        document.getElementById("total-tokens").innerText =
+          Math.round(sumTokens).toLocaleString();
+        document.getElementById("total-usd").innerText =
+          "$" +
+          sumUsd.toLocaleString(undefined, {
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 2,
+          });
       }
 
       fetchPrice();
+      setInterval(fetchPrice, 60000);
     </script>
   </body>
 </html>
