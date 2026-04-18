@@ -10,7 +10,8 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Orbitron:wght@400;700;900&display=swap");
+
       :root {
         --primary: #06b6d4;
         --bg-dark: #020617;
@@ -21,6 +22,30 @@
         font-family: "Plus Jakarta Sans", sans-serif;
         overflow-x: hidden;
       }
+
+      /* HIỆU ỨNG CHỚP SÁNG LOGO */
+      @keyframes led-glow {
+        0%,
+        100% {
+          box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+          filter: brightness(1);
+        }
+        50% {
+          box-shadow: 0 0 30px rgba(6, 182, 212, 0.6);
+          filter: brightness(1.2);
+        }
+      }
+      .led-logo {
+        animation: led-glow 2.5s infinite ease-in-out;
+        border: none !important;
+      }
+
+      .community-font {
+        font-family: "Orbitron", sans-serif;
+        letter-spacing: 1px;
+        text-shadow: 0 0 8px rgba(34, 211, 238, 0.6);
+      }
+
       .bg-glow {
         position: fixed;
         top: 0;
@@ -59,6 +84,7 @@
         backdrop-filter: blur(16px);
         border: 1px solid rgba(255, 255, 255, 0.05);
       }
+
       .btn-select {
         background: #0f172a;
         border: 1px solid #1e293b;
@@ -75,11 +101,9 @@
       .btn-gradient {
         background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
       }
+
       .custom-scrollbar::-webkit-scrollbar {
         width: 4px;
-      }
-      .custom-scrollbar::-webkit-scrollbar-track {
-        background: transparent;
       }
       .custom-scrollbar::-webkit-scrollbar-thumb {
         background: #1e293b;
@@ -99,7 +123,7 @@
         <div class="flex items-center gap-5">
           <img
             src="https://pbs.twimg.com/media/GtPpn5JWwAANuk6.jpg"
-            class="w-16 h-16 rounded-2xl shadow-2xl"
+            class="w-16 h-16 rounded-2xl shadow-2xl led-logo"
           />
           <div>
             <h1
@@ -118,19 +142,19 @@
           class="flex items-center gap-4 bg-slate-900/50 px-6 py-3 rounded-2xl border border-white/10 shadow-lg"
         >
           <p
-            class="text-sm font-black text-cyan-300 tracking-tight italic hidden md:block"
+            class="text-sm font-black text-cyan-300 tracking-tight italic hidden md:block community-font"
           >
             Sui VietNam Community
           </p>
           <img
             src="https://i.postimg.cc/RFgdS32B/Logo-(1).png"
-            class="w-12 h-12 rounded-full border-2 border-cyan-500/20 p-0.5 bg-[#020617] object-cover"
+            class="w-12 h-12 rounded-full p-0.5 bg-[#020617] object-cover led-logo"
           />
         </div>
       </div>
 
       <div class="space-y-6">
-        <!-- Settings -->
+        <!-- Main Settings -->
         <div
           class="glass p-6 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8"
         >
@@ -256,8 +280,8 @@
         <div class="glass p-6 rounded-3xl">
           <label
             class="block text-[11px] font-bold text-cyan-500 mb-3 uppercase italic tracking-widest"
-            >3. Kiểm tra danh sách ví hàng loạt
-          </label>
+            >3. Kiểm tra danh sách ví hàng loạt</label
+          >
           <textarea
             id="input-data"
             rows="5"
@@ -273,7 +297,7 @@
           </button>
         </div>
 
-        <!-- Summary Section -->
+        <!-- Summary -->
         <div
           id="summary-section"
           class="hidden grid grid-cols-1 md:grid-cols-3 gap-4"
@@ -319,7 +343,7 @@
         <!-- Results Table -->
         <div class="glass rounded-3xl overflow-hidden border border-white/5">
           <div
-            class="p-5 border-b border-white/5 flex flex-col md:flex-row justify-between items-center bg-white/5 gap-4"
+            class="p-6 border-b border-white/5 flex flex-col md:flex-row justify-between items-center bg-white/5 gap-6"
           >
             <h3
               class="text-xs font-black uppercase tracking-widest text-white italic"
@@ -327,25 +351,25 @@
               Chi tiết phân bổ dự kiến
             </h3>
 
-            <!-- Custom Price Section -->
+            <!-- Ô GIÁ ĐÃ ĐƯỢC LÀM TO RA -->
             <div
-              class="flex items-center gap-4 bg-black/40 p-2 rounded-xl border border-white/5"
+              class="flex items-center gap-6 bg-black/60 px-5 py-3 rounded-2xl border border-white/10 shadow-2xl"
             >
-              <div class="flex items-center gap-2">
+              <div class="flex items-center gap-3">
                 <span
-                  class="text-[10px] text-slate-500 font-bold uppercase italic"
+                  class="text-[11px] text-slate-400 font-bold uppercase italic tracking-wider"
                   >Giá Live:</span
                 >
                 <span
                   id="live-price-label"
-                  class="text-xs font-black text-cyan-400 font-mono tracking-tighter"
-                  >$0.0320</span
+                  class="text-lg font-black text-cyan-400 font-mono tracking-tighter leading-none"
+                  >$...</span
                 >
               </div>
-              <div class="h-4 w-[1px] bg-white/10"></div>
-              <div class="flex items-center gap-2">
+              <div class="h-6 w-[1px] bg-white/20"></div>
+              <div class="flex items-center gap-3">
                 <span
-                  class="text-[10px] text-green-500 font-bold uppercase italic"
+                  class="text-[11px] text-green-500 font-bold uppercase italic tracking-wider"
                   >Chỉnh giá:</span
                 >
                 <input
@@ -353,13 +377,12 @@
                   id="custom-price"
                   oninput="updateAll()"
                   step="0.001"
-                  placeholder="Tự điền..."
-                  class="w-20 bg-slate-900 border border-white/10 rounded-lg px-2 py-1 text-xs font-black text-green-400 outline-none focus:border-green-500/50"
+                  placeholder="0.000"
+                  class="w-24 bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-sm font-black text-green-400 outline-none focus:border-green-500/50 transition-all"
                 />
               </div>
             </div>
           </div>
-
           <div class="overflow-x-auto">
             <table class="w-full text-left">
               <thead
@@ -390,17 +413,6 @@
           </div>
         </div>
       </div>
-
-      <div class="mt-10 text-center pb-10">
-        <p
-          class="text-[10px] text-slate-700 font-black uppercase tracking-[0.5em] mb-2"
-        >
-          Powered By
-        </p>
-        <p class="text-sm font-black text-slate-500 italic uppercase">
-          Sui VietNam Community
-        </p>
-      </div>
     </div>
 
     <script>
@@ -408,8 +420,9 @@
       let selectedSupply = 12000000;
       let lastData = [];
       const TOTAL_DEEP = 10000000000;
+      const DEEP_ADDRESS =
+        "0xdeeb7a4662eec9f2f3def03fb937a663dddaa2e215b8078a284d026b7946c270::deep::DEEP";
 
-      // Hàm lấy giá trị thực tế đang dùng (Ưu tiên giá tự nhập)
       function getActivePrice() {
         const customPrice = document.getElementById("custom-price").value;
         return customPrice ? parseFloat(customPrice) : livePrice;
@@ -417,18 +430,21 @@
 
       async function fetchPrice() {
         try {
-          const res = await fetch(
-            `https://api.coingecko.com/api/v3/simple/price?ids=deepbook&vs_currencies=usd&t=${Date.now()}`
-          );
-          const data = await res.json();
-          if (data.deepbook && data.deepbook.usd) {
-            livePrice = data.deepbook.usd;
-            document.getElementById("live-price-label").innerText =
-              "$" + livePrice.toFixed(4);
-            updateAll();
+          const res = await fetch("https://api-sui.cetus.zone/v3/token/list");
+          const json = await res.json();
+          if (json.code === 200 && json.data && json.data.tokens) {
+            const deepToken = json.data.tokens.find(
+              (t) => t.address === DEEP_ADDRESS
+            );
+            if (deepToken && deepToken.price) {
+              livePrice = parseFloat(deepToken.price);
+              const label = document.getElementById("live-price-label");
+              label.innerText = "$" + livePrice.toFixed(4);
+              updateAll();
+            }
           }
         } catch (e) {
-          console.error("Lỗi API Price:", e);
+          console.error("Lỗi lấy giá:", e);
         }
       }
 
@@ -454,7 +470,6 @@
         const rate = (TOTAL_DEEP * (pct / 100)) / selectedSupply;
         const tokens = points * rate;
         const usd = tokens * getActivePrice();
-
         document.getElementById("quick-token").innerText =
           Math.round(tokens).toLocaleString();
         document.getElementById("quick-usd").innerText =
@@ -476,17 +491,14 @@
         const input = document.getElementById("input-data").value.trim();
         const lines = input.split(/[\n,;\s]+/).filter((l) => l.trim() !== "");
         const btn = document.getElementById("btn-check");
-
         if (lines.length === 0) return;
-
         btn.disabled = true;
         btn.innerHTML =
-          '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Đang đồng bộ Cetus API...';
-
+          '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Đang đồng bộ...';
         let dataList = [];
         for (let item of lines) {
           if (item.startsWith("0x")) {
-            await sleep(300); // Tránh bị khóa API
+            await sleep(300);
             try {
               const res = await fetch(
                 `https://api-sui.cetus.zone/v3/sui/deepbookv3/points/self_rank?address=${item}`
@@ -512,7 +524,6 @@
             });
           }
         }
-
         lastData = dataList;
         document.getElementById("summary-section").classList.remove("hidden");
         renderResults(dataList);
@@ -525,11 +536,9 @@
         const rate = (TOTAL_DEEP * (pct / 100)) / selectedSupply;
         const tbody = document.getElementById("result-table");
         const currentActivePrice = getActivePrice();
-
         let sumPoints = 0,
           sumTokens = 0,
           sumUsd = 0;
-
         tbody.innerHTML = data
           .map((item) => {
             const tokens = item.points * rate;
@@ -537,13 +546,11 @@
             sumPoints += item.points;
             sumTokens += tokens;
             sumUsd += usdValue;
-
             const displayId = item.id.startsWith("0x")
               ? item.id.substring(0, 8) +
                 "..." +
                 item.id.substring(item.id.length - 4)
               : item.id;
-
             return `
             <tr class="hover:bg-cyan-500/5 transition-colors group">
                 <td class="p-5 font-bold text-slate-500 italic">#${
@@ -561,7 +568,6 @@
             </tr>`;
           })
           .join("");
-
         document.getElementById("total-points").innerText =
           sumPoints.toLocaleString();
         document.getElementById("total-tokens").innerText =
@@ -574,8 +580,9 @@
           });
       }
 
-      fetchPrice();
-      setInterval(fetchPrice, 60000);
+      // Lấy giá ngay lập tức khi load xong trang
+      window.onload = fetchPrice;
+      setInterval(fetchPrice, 5000);
     </script>
   </body>
 </html>
