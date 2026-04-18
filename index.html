@@ -10,12 +10,14 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <style>
+      /* Import fonts: Jakarta cho nội dung và Orbitron cho tiêu đề cộng đồng */
       @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Orbitron:wght@400;700;900&display=swap");
 
       :root {
         --primary: #06b6d4;
         --bg-dark: #020617;
       }
+
       body {
         background: var(--bg-dark);
         color: #f8fafc;
@@ -23,23 +25,23 @@
         overflow-x: hidden;
       }
 
-      /* HIỆU ỨNG CHỚP SÁNG LOGO */
+      /* Hiệu ứng LED cho Logo */
       @keyframes led-glow {
         0%,
         100% {
-          box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
-          filter: brightness(1);
+          box-shadow: 0 0 5px rgba(6, 182, 212, 0.4),
+            0 0 10px rgba(6, 182, 212, 0.2);
         }
         50% {
-          box-shadow: 0 0 30px rgba(6, 182, 212, 0.6);
-          filter: brightness(1.2);
+          box-shadow: 0 0 15px rgba(6, 182, 212, 0.8),
+            0 0 25px rgba(6, 182, 212, 0.5);
         }
       }
       .led-logo {
         animation: led-glow 2.5s infinite ease-in-out;
-        border: none !important;
       }
 
+      /* Font chữ cộng đồng xịn xò */
       .community-font {
         font-family: "Orbitron", sans-serif;
         letter-spacing: 1px;
@@ -65,6 +67,7 @@
         z-index: -1;
         filter: blur(60px);
       }
+
       .bg-grid {
         position: fixed;
         top: 0;
@@ -79,6 +82,7 @@
         background-size: 40px 40px;
         z-index: -2;
       }
+
       .glass {
         background: rgba(15, 23, 42, 0.7);
         backdrop-filter: blur(16px);
@@ -91,6 +95,7 @@
         transition: all 0.2s;
         color: #64748b;
       }
+
       .btn-select.active {
         background: #06b6d4;
         border-color: #22d3ee;
@@ -98,12 +103,16 @@
         font-weight: 800;
         box-shadow: 0 0 15px rgba(34, 211, 238, 0.4);
       }
+
       .btn-gradient {
         background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
       }
 
       .custom-scrollbar::-webkit-scrollbar {
         width: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
       }
       .custom-scrollbar::-webkit-scrollbar-thumb {
         background: #1e293b;
@@ -123,7 +132,7 @@
         <div class="flex items-center gap-5">
           <img
             src="https://pbs.twimg.com/media/GtPpn5JWwAANuk6.jpg"
-            class="w-16 h-16 rounded-2xl shadow-2xl led-logo"
+            class="w-16 h-16 rounded-2xl shadow-2xl led-logo border-2 border-cyan-500/30"
           />
           <div>
             <h1
@@ -148,13 +157,13 @@
           </p>
           <img
             src="https://i.postimg.cc/RFgdS32B/Logo-(1).png"
-            class="w-12 h-12 rounded-full p-0.5 bg-[#020617] object-cover led-logo"
+            class="w-12 h-12 rounded-full border-2 p-0.5 bg-[#020617] object-cover led-logo border-cyan-500/30"
           />
         </div>
       </div>
 
       <div class="space-y-6">
-        <!-- Main Settings -->
+        <!-- Settings -->
         <div
           class="glass p-6 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8"
         >
@@ -297,7 +306,7 @@
           </button>
         </div>
 
-        <!-- Summary -->
+        <!-- Summary Section -->
         <div
           id="summary-section"
           class="hidden grid grid-cols-1 md:grid-cols-3 gap-4"
@@ -343,33 +352,31 @@
         <!-- Results Table -->
         <div class="glass rounded-3xl overflow-hidden border border-white/5">
           <div
-            class="p-6 border-b border-white/5 flex flex-col md:flex-row justify-between items-center bg-white/5 gap-6"
+            class="p-5 border-b border-white/5 flex flex-col md:flex-row justify-between items-center bg-white/5 gap-4"
           >
             <h3
               class="text-xs font-black uppercase tracking-widest text-white italic"
             >
               Chi tiết phân bổ dự kiến
             </h3>
-
-            <!-- Ô GIÁ ĐÃ ĐƯỢC LÀM TO RA -->
             <div
-              class="flex items-center gap-6 bg-black/60 px-5 py-3 rounded-2xl border border-white/10 shadow-2xl"
+              class="flex items-center gap-4 bg-black/40 p-2 rounded-xl border border-white/5"
             >
-              <div class="flex items-center gap-3">
+              <div class="flex items-center gap-2">
                 <span
-                  class="text-[11px] text-slate-400 font-bold uppercase italic tracking-wider"
+                  class="text-[10px] text-slate-500 font-bold uppercase italic"
                   >Giá Live:</span
                 >
                 <span
                   id="live-price-label"
-                  class="text-lg font-black text-cyan-400 font-mono tracking-tighter leading-none"
+                  class="text-xs font-black text-cyan-400 font-mono tracking-tighter"
                   >$...</span
                 >
               </div>
-              <div class="h-6 w-[1px] bg-white/20"></div>
-              <div class="flex items-center gap-3">
+              <div class="h-4 w-[1px] bg-white/10"></div>
+              <div class="flex items-center gap-2">
                 <span
-                  class="text-[11px] text-green-500 font-bold uppercase italic tracking-wider"
+                  class="text-[10px] text-green-500 font-bold uppercase italic"
                   >Chỉnh giá:</span
                 >
                 <input
@@ -377,8 +384,8 @@
                   id="custom-price"
                   oninput="updateAll()"
                   step="0.001"
-                  placeholder="0.000"
-                  class="w-24 bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-sm font-black text-green-400 outline-none focus:border-green-500/50 transition-all"
+                  placeholder="Tự điền..."
+                  class="w-20 bg-slate-900 border border-white/10 rounded-lg px-2 py-1 text-xs font-black text-green-400 outline-none focus:border-green-500/50"
                 />
               </div>
             </div>
@@ -413,6 +420,19 @@
           </div>
         </div>
       </div>
+
+      <div class="mt-10 text-center pb-10">
+        <p
+          class="text-[10px] text-slate-700 font-black uppercase tracking-[0.5em] mb-2"
+        >
+          Powered By
+        </p>
+        <p
+          class="text-sm font-black text-slate-500 italic uppercase community-font"
+        >
+          Sui VietNam Community
+        </p>
+      </div>
     </div>
 
     <script>
@@ -430,6 +450,7 @@
 
       async function fetchPrice() {
         try {
+          // Lấy giá DEEP/USDT trực tiếp từ Cetus API
           const res = await fetch("https://api-sui.cetus.zone/v3/token/list");
           const json = await res.json();
           if (json.code === 200 && json.data && json.data.tokens) {
@@ -440,11 +461,13 @@
               livePrice = parseFloat(deepToken.price);
               const label = document.getElementById("live-price-label");
               label.innerText = "$" + livePrice.toFixed(4);
+              label.style.textShadow = "0 0 10px #22d3ee";
+              setTimeout(() => (label.style.textShadow = "none"), 800);
               updateAll();
             }
           }
         } catch (e) {
-          console.error("Lỗi lấy giá:", e);
+          console.error("Lỗi cập nhật giá:", e);
         }
       }
 
@@ -494,7 +517,7 @@
         if (lines.length === 0) return;
         btn.disabled = true;
         btn.innerHTML =
-          '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Đang đồng bộ...';
+          '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Đang đồng bộ Cetus API...';
         let dataList = [];
         for (let item of lines) {
           if (item.startsWith("0x")) {
@@ -580,8 +603,8 @@
           });
       }
 
-      // Lấy giá ngay lập tức khi load xong trang
-      window.onload = fetchPrice;
+      fetchPrice();
+      // Cập nhật giá mỗi 5 giây cho Real-time
       setInterval(fetchPrice, 5000);
     </script>
   </body>
