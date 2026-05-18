@@ -10,7 +10,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <style>
-      /* Import fonts: Jakarta cho nội dung và Orbitron cho tiêu đề cộng đồng */
+      /* Import fonts */
       @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Orbitron:wght@400;700;900&display=swap");
 
       :root {
@@ -25,7 +25,7 @@
         overflow-x: hidden;
       }
 
-      /* Hiệu ứng LED cho Logo */
+      /* Hiệu ứng LED */
       @keyframes led-glow {
         0%,
         100% {
@@ -41,7 +41,6 @@
         animation: led-glow 2.5s infinite ease-in-out;
       }
 
-      /* Font chữ cộng đồng xịn xò */
       .community-font {
         font-family: "Orbitron", sans-serif;
         letter-spacing: 1px;
@@ -95,13 +94,57 @@
         transition: all 0.2s;
         color: #64748b;
       }
-
       .btn-select.active {
         background: #06b6d4;
         border-color: #22d3ee;
         color: #020617;
         font-weight: 800;
         box-shadow: 0 0 15px rgba(34, 211, 238, 0.4);
+      }
+
+      /* Styles cho Role Buttons trong Quick Lab */
+      .role-btn {
+        background: #0f172a;
+        border: 1px solid #1e293b;
+        transition: all 0.2s;
+        color: #64748b;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        border-radius: 12px;
+        padding: 10px 4px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+      }
+      .role-btn:hover {
+        background: #1e293b;
+      }
+      .role-btn.active.role-none {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: #cbd5e1;
+        color: #f8fafc;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+      }
+      .role-btn.active.role-deepest {
+        background: rgba(59, 130, 246, 0.15);
+        border-color: #3b82f6;
+        color: #bfdbfe;
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+      }
+      .role-btn.active.role-explorer {
+        background: rgba(249, 115, 22, 0.15);
+        border-color: #f97316;
+        color: #fed7aa;
+        box-shadow: 0 0 15px rgba(249, 115, 22, 0.3);
+      }
+      .role-btn.active.role-diver {
+        background: rgba(29, 78, 216, 0.15);
+        border-color: #1d4ed8;
+        color: #93c5fd;
+        box-shadow: 0 0 15px rgba(29, 78, 216, 0.3);
       }
 
       .btn-gradient {
@@ -118,6 +161,44 @@
         background: #1e293b;
         border-radius: 10px;
       }
+
+      /* Style dropdown trong bảng */
+      .table-select {
+        background-color: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #e2e8f0;
+        font-size: 0.75rem;
+        border-radius: 0.5rem;
+        padding: 0.25rem 0.5rem;
+        outline: none;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .table-select:focus {
+        border-color: #06b6d4;
+      }
+      .table-select option {
+        background-color: #0f172a;
+        color: #e2e8f0;
+      }
+
+      /* Input giá trong Summary */
+      .summary-price-input {
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(168, 85, 247, 0.3);
+        color: #c084fc;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 900;
+        border-radius: 0.5rem;
+        width: 100px;
+        outline: none;
+        transition: all 0.2s;
+      }
+      .summary-price-input:focus {
+        border-color: #a855f7;
+        box-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
+      }
     </style>
   </head>
   <body class="p-4 md:p-8">
@@ -125,7 +206,6 @@
     <div class="bg-grid"></div>
 
     <div class="max-w-5xl mx-auto">
-      <!-- Header -->
       <div
         class="flex flex-col md:flex-row justify-between items-center mb-10 gap-6 pb-6 border-b border-white/5"
       >
@@ -163,15 +243,111 @@
       </div>
 
       <div class="space-y-6">
-        <!-- Settings -->
+        <div
+          class="glass p-6 sm:p-8 rounded-3xl border border-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.15)] relative overflow-hidden"
+        >
+          <div
+            class="absolute -top-10 -right-10 w-40 h-40 bg-cyan-500/20 rounded-full blur-3xl"
+          ></div>
+          <div
+            class="absolute -bottom-10 -left-10 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl"
+          ></div>
+
+          <div class="text-center mb-6 relative z-10">
+            <div class="flex items-center justify-center gap-3 mb-2">
+              <i
+                class="fa-solid fa-clock text-cyan-400 text-xl animate-pulse"
+              ></i>
+              <h2
+                class="text-xl sm:text-2xl font-black text-white uppercase tracking-[0.15em] italic community-font"
+              >
+                Deep Claim <span class="text-cyan-400">Countdown</span>
+              </h2>
+            </div>
+            <p
+              class="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-widest"
+            >
+              As announced on DeepBook Discord
+            </p>
+          </div>
+
+          <div
+            id="countdown-wrapper"
+            class="flex justify-center gap-3 sm:gap-6 relative z-10"
+          >
+            <div
+              class="bg-slate-950/80 border border-white/5 w-16 h-16 sm:w-24 sm:h-24 rounded-2xl flex flex-col justify-center items-center shadow-inner backdrop-blur-md"
+            >
+              <span
+                id="cd-days"
+                class="text-2xl sm:text-4xl font-black text-white italic"
+                >00</span
+              >
+              <span
+                class="text-[9px] sm:text-[11px] font-bold text-cyan-500 uppercase tracking-widest mt-1 sm:mt-2"
+                >Ngày</span
+              >
+            </div>
+            <div
+              class="bg-slate-950/80 border border-white/5 w-16 h-16 sm:w-24 sm:h-24 rounded-2xl flex flex-col justify-center items-center shadow-inner backdrop-blur-md"
+            >
+              <span
+                id="cd-hours"
+                class="text-2xl sm:text-4xl font-black text-white italic"
+                >00</span
+              >
+              <span
+                class="text-[9px] sm:text-[11px] font-bold text-cyan-500 uppercase tracking-widest mt-1 sm:mt-2"
+                >Giờ</span
+              >
+            </div>
+            <div
+              class="bg-slate-950/80 border border-white/5 w-16 h-16 sm:w-24 sm:h-24 rounded-2xl flex flex-col justify-center items-center shadow-inner backdrop-blur-md"
+            >
+              <span
+                id="cd-minutes"
+                class="text-2xl sm:text-4xl font-black text-white italic"
+                >00</span
+              >
+              <span
+                class="text-[9px] sm:text-[11px] font-bold text-cyan-500 uppercase tracking-widest mt-1 sm:mt-2"
+                >Phút</span
+              >
+            </div>
+            <div
+              class="bg-slate-950/80 border border-cyan-500/30 w-16 h-16 sm:w-24 sm:h-24 rounded-2xl flex flex-col justify-center items-center shadow-[inset_0_0_15px_rgba(6,182,212,0.2)] backdrop-blur-md"
+            >
+              <span
+                id="cd-seconds"
+                class="text-2xl sm:text-4xl font-black text-cyan-400 italic"
+                style="text-shadow: 0 0 15px rgba(34, 211, 238, 0.6)"
+                >00</span
+              >
+              <span
+                class="text-[9px] sm:text-[11px] font-bold text-cyan-400 uppercase tracking-widest mt-1 sm:mt-2"
+                >Giây</span
+              >
+            </div>
+          </div>
+
+          <div id="cd-message" class="hidden text-center mt-4 relative z-10">
+            <p
+              class="text-xl sm:text-2xl font-black text-green-400 uppercase tracking-widest italic led-logo py-4"
+            >
+              🎉 ĐÃ MỞ CLAIM. LFG! 🎉
+            </p>
+          </div>
+        </div>
+
         <div
           class="glass p-6 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-8"
         >
           <div>
             <label
               class="block text-[11px] font-bold text-cyan-500 mb-4 uppercase italic tracking-widest"
-              >1. Tổng cung Point dự kiến</label
             >
+              1. Tổng cung Point dự kiến (Base Pool)
+            </label>
             <div class="grid grid-cols-2 gap-2">
               <button
                 onclick="setSupply(12000000, this)"
@@ -224,59 +400,139 @@
           </div>
         </div>
 
-        <!-- Quick Calculator -->
         <div
-          class="glass p-8 rounded-3xl border-l-4 border-l-cyan-500 shadow-xl"
+          class="glass p-6 md:p-8 rounded-3xl border-l-4 border-l-cyan-500 shadow-xl relative"
         >
-          <div class="flex items-center gap-3 mb-6">
-            <i class="fa-solid fa-calculator text-cyan-400"></i>
-            <h2
-              class="text-xs font-black uppercase tracking-widest italic text-white"
-            >
-              TÍNH NHANH (QUICK LAB)
-            </h2>
-          </div>
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-end">
-            <div>
-              <label
-                class="block text-[9px] font-bold text-slate-500 mb-2 uppercase italic tracking-widest"
-                >Nhập số Point</label
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-3">
+              <i class="fa-solid fa-calculator text-cyan-400 text-xl"></i>
+              <h2
+                class="text-sm font-black uppercase tracking-widest italic text-white"
               >
-              <input
-                type="number"
-                id="quick-input"
-                oninput="quickCalc()"
-                class="w-full bg-slate-950 border border-white/5 rounded-xl p-4 text-white font-black text-xl outline-none focus:border-cyan-500/30 transition-all"
-                placeholder="100"
-              />
+                TÍNH NHANH KÈM ROLE BOOSTER
+              </h2>
             </div>
-            <div class="lg:col-span-2 grid grid-cols-2 gap-4">
+            <span
+              id="live-price-status"
+              class="text-[10px] text-green-400 font-bold uppercase tracking-widest animate-pulse"
+            >
+              ● Live API (DexScreener)
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div class="lg:col-span-7 space-y-5">
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label
+                    class="block text-[10px] font-bold text-slate-400 mb-2 uppercase italic tracking-widest"
+                    >Số Point hiện có</label
+                  >
+                  <input
+                    type="number"
+                    id="quick-input"
+                    oninput="updateAll()"
+                    class="w-full bg-slate-950 border border-white/10 rounded-xl p-3 text-white font-black text-lg outline-none focus:border-cyan-500/50 transition-all"
+                    placeholder="VD: 100"
+                  />
+                </div>
+                <div>
+                  <label
+                    class="block text-[10px] font-bold text-slate-400 mb-2 uppercase italic tracking-widest"
+                    >Giá $DEEP ($)</label
+                  >
+                  <input
+                    type="number"
+                    id="quick-price"
+                    oninput="syncPrice(this.value)"
+                    step="0.0001"
+                    class="w-full bg-slate-950 border border-white/10 rounded-xl p-3 text-green-400 font-black text-lg outline-none focus:border-green-500/50 transition-all"
+                    placeholder="0.0337"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  class="block text-[10px] font-bold text-slate-400 mb-2 uppercase italic tracking-widest"
+                  >Chọn Discord Role</label
+                >
+                <div class="grid grid-cols-4 gap-2">
+                  <button
+                    class="role-btn active role-none"
+                    onclick="setRole(1, this, 'role-none')"
+                  >
+                    No Role
+                    <span
+                      class="text-[9px] opacity-70 font-mono tracking-tighter text-slate-300"
+                      >0%</span
+                    >
+                  </button>
+                  <button
+                    class="role-btn role-deepest"
+                    onclick="setRole(1.1, this, 'role-deepest')"
+                  >
+                    Deepest
+                    <span
+                      class="text-[9px] opacity-70 font-mono tracking-tighter text-blue-300"
+                      >+10%</span
+                    >
+                  </button>
+                  <button
+                    class="role-btn role-explorer"
+                    onclick="setRole(1.15, this, 'role-explorer')"
+                  >
+                    Explorer
+                    <span
+                      class="text-[9px] opacity-70 font-mono tracking-tighter text-orange-300"
+                      >+15%</span
+                    >
+                  </button>
+                  <button
+                    class="role-btn role-diver"
+                    onclick="setRole(1.2, this, 'role-diver')"
+                  >
+                    Diver
+                    <span
+                      class="text-[9px] opacity-70 font-mono tracking-tighter text-blue-500"
+                      >+20%</span
+                    >
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4 h-full"
+            >
               <div
-                class="bg-white/5 p-5 rounded-2xl border border-white/5 text-center"
+                class="bg-gradient-to-br from-white/5 to-transparent p-5 rounded-2xl border border-white/5 flex flex-col justify-center items-center text-center"
               >
                 <p
-                  class="text-[9px] font-bold text-slate-500 uppercase mb-1 italic"
+                  class="text-[10px] font-bold text-slate-400 uppercase mb-2 italic tracking-widest"
                 >
                   Sẽ nhận ($DEEP)
                 </p>
                 <p
                   id="quick-token"
-                  class="text-2xl font-black text-white italic"
+                  class="text-3xl font-black text-cyan-400 italic"
+                  style="text-shadow: 0 0 10px rgba(34, 211, 238, 0.3)"
                 >
                   0
                 </p>
               </div>
               <div
-                class="bg-white/5 p-5 rounded-2xl border border-white/5 text-center"
+                class="bg-gradient-to-br from-green-500/10 to-transparent p-5 rounded-2xl border border-green-500/20 flex flex-col justify-center items-center text-center"
               >
                 <p
-                  class="text-[9px] font-bold text-slate-500 uppercase mb-1 italic"
+                  class="text-[10px] font-bold text-green-500/70 uppercase mb-2 italic tracking-widest"
                 >
-                  Giá trị ước tính ($)
+                  Giá trị ước tính
                 </p>
                 <p
                   id="quick-usd"
-                  class="text-2xl font-black text-green-400 italic"
+                  class="text-3xl font-black text-green-400 italic"
+                  style="text-shadow: 0 0 10px rgba(74, 222, 128, 0.3)"
                 >
                   $0
                 </p>
@@ -285,17 +541,16 @@
           </div>
         </div>
 
-        <!-- Wallet Input -->
         <div class="glass p-6 rounded-3xl">
           <label
             class="block text-[11px] font-bold text-cyan-500 mb-3 uppercase italic tracking-widest"
-            >3. Kiểm tra danh sách ví hàng loạt</label
+            >3. Kiểm tra danh sách ví hàng loạt (Mysten API)</label
           >
           <textarea
             id="input-data"
             rows="5"
             class="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 font-mono text-sm text-cyan-100 outline-none focus:border-cyan-500/50 transition-all custom-scrollbar"
-            placeholder="Nhập ví 0x... mỗi dòng một ví"
+            placeholder="Nhập ví 0x... hoặc số điểm (mỗi dòng 1 cái)"
           ></textarea>
           <button
             onclick="handleCheck()"
@@ -306,16 +561,15 @@
           </button>
         </div>
 
-        <!-- Summary Section -->
         <div
           id="summary-section"
-          class="hidden grid grid-cols-1 md:grid-cols-3 gap-4"
+          class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
         >
           <div
-            class="glass p-6 rounded-2xl text-center border-b-2 border-b-slate-500"
+            class="glass p-5 rounded-2xl text-center border-b-2 border-b-slate-500 flex flex-col justify-center"
           >
             <p
-              class="text-[9px] font-bold text-slate-500 uppercase mb-1 tracking-widest"
+              class="text-[9px] font-bold text-slate-500 uppercase mb-2 tracking-widest"
             >
               Tổng Point
             </p>
@@ -324,10 +578,10 @@
             </p>
           </div>
           <div
-            class="glass p-6 rounded-2xl text-center border-b-2 border-b-cyan-500"
+            class="glass p-5 rounded-2xl text-center border-b-2 border-b-cyan-500 flex flex-col justify-center"
           >
             <p
-              class="text-[9px] font-bold text-cyan-500 uppercase mb-1 tracking-widest"
+              class="text-[9px] font-bold text-cyan-500 uppercase mb-2 tracking-widest"
             >
               Tổng $DEEP
             </p>
@@ -335,11 +589,33 @@
               0
             </p>
           </div>
+
           <div
-            class="glass p-6 rounded-2xl text-center border-b-2 border-b-green-500"
+            class="glass p-5 rounded-2xl text-center border-b-2 border-b-purple-500 flex flex-col justify-center items-center bg-purple-900/10"
           >
             <p
-              class="text-[9px] font-bold text-green-500 uppercase mb-1 tracking-widest"
+              class="text-[9px] font-bold text-purple-400 uppercase mb-2 tracking-widest flex items-center gap-1"
+            >
+              <i class="fa-solid fa-pen-to-square"></i> Giá $DEEP
+            </p>
+            <div class="flex items-center justify-center">
+              <span class="text-purple-400 font-black text-xl mr-1">$</span>
+              <input
+                type="number"
+                id="summary-price"
+                oninput="syncPrice(this.value)"
+                step="0.0001"
+                class="summary-price-input"
+                value="0.0337"
+              />
+            </div>
+          </div>
+
+          <div
+            class="glass p-5 rounded-2xl text-center border-b-2 border-b-green-500 flex flex-col justify-center"
+          >
+            <p
+              class="text-[9px] font-bold text-green-500 uppercase mb-2 tracking-widest"
             >
               Tổng Giá Trị $
             </p>
@@ -349,58 +625,53 @@
           </div>
         </div>
 
-        <!-- Results Table -->
         <div class="glass rounded-3xl overflow-hidden border border-white/5">
           <div
-            class="p-5 border-b border-white/5 flex flex-col md:flex-row justify-between items-center bg-white/5 gap-4"
+            class="p-4 md:p-5 border-b border-white/5 flex flex-col md:flex-row justify-between items-center bg-white/5 gap-4"
           >
             <h3
               class="text-xs font-black uppercase tracking-widest text-white italic"
             >
-              Chi tiết phân bổ dự kiến
+              Chi tiết phân bổ ví
             </h3>
+
             <div
-              class="flex items-center gap-4 bg-black/40 p-2 rounded-xl border border-white/5"
+              id="bulk-apply-container"
+              class="hidden flex items-center gap-3 bg-black/40 p-2 rounded-xl border border-white/5"
             >
-              <div class="flex items-center gap-2">
-                <span
-                  class="text-[10px] text-slate-500 font-bold uppercase italic"
-                  >Giá Live:</span
-                >
-                <span
-                  id="live-price-label"
-                  class="text-xs font-black text-cyan-400 font-mono tracking-tighter"
-                  >$...</span
-                >
-              </div>
-              <div class="h-4 w-[1px] bg-white/10"></div>
-              <div class="flex items-center gap-2">
-                <span
-                  class="text-[10px] text-green-500 font-bold uppercase italic"
-                  >Chỉnh giá:</span
-                >
-                <input
-                  type="number"
-                  id="custom-price"
-                  oninput="updateAll()"
-                  step="0.001"
-                  placeholder="Tự điền..."
-                  class="w-20 bg-slate-900 border border-white/10 rounded-lg px-2 py-1 text-xs font-black text-green-400 outline-none focus:border-green-500/50"
-                />
-              </div>
+              <span
+                class="text-[10px] text-slate-400 font-bold uppercase italic"
+                >Set Role nhanh:</span
+              >
+              <select
+                id="bulk-role-select"
+                class="table-select"
+                onchange="bulkApplyRole(this.value)"
+              >
+                <option value="1">No Role (0%)</option>
+                <option value="1.1">Deepest (+10%)</option>
+                <option value="1.15">Explorer (+15%)</option>
+                <option value="1.2">Diver (+20%)</option>
+              </select>
             </div>
           </div>
+
           <div class="overflow-x-auto">
             <table class="w-full text-left">
               <thead
                 class="bg-slate-900/50 text-[10px] text-slate-500 uppercase font-black"
               >
                 <tr>
-                  <th class="p-5">Hạng</th>
-                  <th class="p-5">Địa chỉ ví</th>
-                  <th class="p-5 text-right text-slate-300">Point</th>
-                  <th class="p-5 text-right text-cyan-400">Tokens</th>
-                  <th class="p-5 text-right text-green-400">Giá trị ($)</th>
+                  <th class="p-4 md:p-5">Hạng</th>
+                  <th class="p-4 md:p-5">Địa chỉ ví</th>
+                  <th class="p-4 md:p-5 text-right text-slate-300">
+                    Point Gốc
+                  </th>
+                  <th class="p-4 md:p-5 text-center text-purple-400">Role</th>
+                  <th class="p-4 md:p-5 text-right text-cyan-400">Tokens</th>
+                  <th class="p-4 md:p-5 text-right text-green-400">
+                    Giá trị ($)
+                  </th>
                 </tr>
               </thead>
               <tbody
@@ -409,7 +680,7 @@
               >
                 <tr>
                   <td
-                    colspan="5"
+                    colspan="6"
                     class="p-10 text-center text-slate-700 italic"
                   >
                     Dán ví để bắt đầu kiểm tra...
@@ -436,34 +707,79 @@
     </div>
 
     <script>
-      let livePrice = 0.032;
+      // --- Countdown Logic ---
+      const targetClaimDate = new Date(2026, 4, 23, 20, 0, 0).getTime();
+      const countdownTimer = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = targetClaimDate - now;
+        if (distance < 0) {
+          clearInterval(countdownTimer);
+          document.getElementById("countdown-wrapper").classList.add("hidden");
+          document.getElementById("cd-message").classList.remove("hidden");
+          return;
+        }
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        document.getElementById("cd-days").innerText =
+          days < 10 ? "0" + days : days;
+        document.getElementById("cd-hours").innerText =
+          hours < 10 ? "0" + hours : hours;
+        document.getElementById("cd-minutes").innerText =
+          minutes < 10 ? "0" + minutes : minutes;
+        document.getElementById("cd-seconds").innerText =
+          seconds < 10 ? "0" + seconds : seconds;
+      }, 1000);
+
+      // --- Main Logic ---
+      let livePrice = 0.0337;
       let selectedSupply = 12000000;
+      let currentRoleBonus = 1;
       let lastData = [];
       const TOTAL_DEEP = 10000000000;
-      const DEEP_ADDRESS =
-        "0xdeeb7a4662eec9f2f3def03fb937a663dddaa2e215b8078a284d026b7946c270::deep::DEEP";
 
-      function getActivePrice() {
-        const customPrice = document.getElementById("custom-price").value;
-        return customPrice ? parseFloat(customPrice) : livePrice;
+      // Hàm đồng bộ giá giữa 2 ô Input (Quick Lab và Summary)
+      function syncPrice(val) {
+        const parsedVal = parseFloat(val) || 0;
+        livePrice = parsedVal;
+
+        // Cập nhật ô trên
+        const quickInput = document.getElementById("quick-price");
+        if (quickInput && quickInput.value !== val) quickInput.value = val;
+
+        // Cập nhật ô dưới
+        const summaryInput = document.getElementById("summary-price");
+        if (summaryInput && summaryInput.value !== val)
+          summaryInput.value = val;
+
+        updateAll();
       }
 
+      function getActivePrice() {
+        return livePrice;
+      }
+
+      // API DEXSCREENER
       async function fetchPrice() {
         try {
-          // Lấy giá DEEP/USDT trực tiếp từ Cetus API
-          const res = await fetch("https://api-sui.cetus.zone/v3/token/list");
+          const res = await fetch(
+            "https://api-dexscreener.com/latest/dex/tokens/0xdeeb7a4662eec9f2f3def03fb937a663dddaa2e215b8078a284d026b7946c270::deep::DEEP"
+          );
           const json = await res.json();
-          if (json.code === 200 && json.data && json.data.tokens) {
-            const deepToken = json.data.tokens.find(
-              (t) => t.address === DEEP_ADDRESS
-            );
-            if (deepToken && deepToken.price) {
-              livePrice = parseFloat(deepToken.price);
-              const label = document.getElementById("live-price-label");
-              label.innerText = "$" + livePrice.toFixed(4);
-              label.style.textShadow = "0 0 10px #22d3ee";
-              setTimeout(() => (label.style.textShadow = "none"), 800);
-              updateAll();
+          if (json.pairs && json.pairs.length > 0) {
+            const fetchedPrice = parseFloat(json.pairs[0].priceUsd);
+            if (!isNaN(fetchedPrice)) {
+              // Chỉ tự động điền nếu người dùng chưa sửa giá thủ công (bằng đúng giá cũ)
+              if (
+                livePrice === window.lastFetchedPrice ||
+                window.lastFetchedPrice === undefined
+              ) {
+                window.lastFetchedPrice = fetchedPrice;
+                syncPrice(fetchedPrice.toFixed(4));
+              }
             }
           }
         } catch (e) {
@@ -486,13 +802,33 @@
         updateAll();
       }
 
+      function setRole(bonus, btn, roleClass) {
+        currentRoleBonus = bonus;
+        const buttons = document.querySelectorAll(".role-btn");
+        buttons.forEach((b) =>
+          b.classList.remove(
+            "active",
+            "role-none",
+            "role-deepest",
+            "role-explorer",
+            "role-diver"
+          )
+        );
+        btn.classList.add("active", roleClass);
+        updateAll();
+      }
+
       function quickCalc() {
         const points =
           parseFloat(document.getElementById("quick-input").value) || 0;
         const pct = parseFloat(document.getElementById("airdrop-slider").value);
+        const currentPrice = getActivePrice();
+
         const rate = (TOTAL_DEEP * (pct / 100)) / selectedSupply;
-        const tokens = points * rate;
-        const usd = tokens * getActivePrice();
+        const effectivePointsUser = points * currentRoleBonus;
+        const tokens = effectivePointsUser * rate;
+        const usd = tokens * currentPrice;
+
         document.getElementById("quick-token").innerText =
           Math.round(tokens).toLocaleString();
         document.getElementById("quick-usd").innerText =
@@ -508,6 +844,19 @@
         if (lastData.length > 0) renderResults(lastData);
       }
 
+      function updateRowRole(index, val) {
+        lastData[index].roleMultiplier = parseFloat(val);
+        renderResults(lastData);
+      }
+
+      function bulkApplyRole(val) {
+        const floatVal = parseFloat(val);
+        lastData.forEach((item) => {
+          item.roleMultiplier = floatVal;
+        });
+        renderResults(lastData);
+      }
+
       const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
       async function handleCheck() {
@@ -515,41 +864,90 @@
         const lines = input.split(/[\n,;\s]+/).filter((l) => l.trim() !== "");
         const btn = document.getElementById("btn-check");
         if (lines.length === 0) return;
+
         btn.disabled = true;
         btn.innerHTML =
-          '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Đang đồng bộ Cetus API...';
+          '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Đang tải dữ liệu Mysten...';
+
+        let addresses = [];
+        let manualEntries = [];
         let dataList = [];
+
         for (let item of lines) {
           if (item.startsWith("0x")) {
-            await sleep(300);
-            try {
-              const res = await fetch(
-                `https://api-sui.cetus.zone/v3/sui/deepbookv3/points/self_rank?address=${item}`
-              );
-              const json = await res.json();
-              if (json.data) {
-                dataList.push({
-                  rank: json.data.rank,
-                  points: json.data.points,
-                  id: item,
-                });
-              } else {
-                dataList.push({ rank: "N/A", points: 0, id: item });
-              }
-            } catch (e) {
-              dataList.push({ rank: "Err", points: 0, id: item });
-            }
+            addresses.push(item);
           } else if (!isNaN(item)) {
-            dataList.push({
-              rank: "-",
-              points: parseInt(item),
+            manualEntries.push({
+              points: parseFloat(item),
               id: "Manual Entry",
             });
           }
         }
-        lastData = dataList;
+
+        const chunkSize = 20;
+        for (let i = 0; i < addresses.length; i += chunkSize) {
+          const chunk = addresses.slice(i, i + chunkSize);
+          try {
+            const res = await fetch(
+              `https://deepbook-indexer.mainnet.mystenlabs.com/get_points?addresses=${chunk.join(
+                ","
+              )}`
+            );
+            const data = await res.json();
+
+            chunk.forEach((addr) => {
+              let pts = 0;
+              if (Array.isArray(data)) {
+                let match = data.find(
+                  (item) =>
+                    item.address === addr ||
+                    item.id === addr ||
+                    item.owner === addr
+                );
+                if (match) pts = match.points || match.total_points || 0;
+              } else if (data && typeof data === "object") {
+                if (data[addr] !== undefined) {
+                  pts =
+                    typeof data[addr] === "object"
+                      ? data[addr].points || 0
+                      : data[addr];
+                } else if (data.data && Array.isArray(data.data)) {
+                  let match = data.data.find(
+                    (item) =>
+                      item.address === addr ||
+                      item.id === addr ||
+                      item.owner === addr
+                  );
+                  if (match) pts = match.points || match.total_points || 0;
+                }
+              }
+              dataList.push({ points: parseFloat(pts) || 0, id: addr });
+            });
+          } catch (e) {
+            console.error("Lỗi:", e);
+            chunk.forEach((addr) =>
+              dataList.push({ points: 0, id: addr, isError: true })
+            );
+          }
+          if (i + chunkSize < addresses.length) await sleep(500);
+        }
+
+        let combinedData = [...dataList, ...manualEntries];
+        combinedData.sort((a, b) => b.points - a.points);
+
+        combinedData.forEach((item, index) => {
+          item.rank = index + 1;
+          item.roleMultiplier = 1;
+        });
+
+        lastData = combinedData;
+
         document.getElementById("summary-section").classList.remove("hidden");
-        renderResults(dataList);
+        document
+          .getElementById("bulk-apply-container")
+          .classList.remove("hidden");
+        renderResults(lastData);
+
         btn.disabled = false;
         btn.innerHTML = '<i class="fa-solid fa-bolt mr-2"></i> Check now';
       }
@@ -557,40 +955,63 @@
       function renderResults(data) {
         const pct = parseFloat(document.getElementById("airdrop-slider").value);
         const rate = (TOTAL_DEEP * (pct / 100)) / selectedSupply;
-        const tbody = document.getElementById("result-table");
         const currentActivePrice = getActivePrice();
+        const tbody = document.getElementById("result-table");
+
         let sumPoints = 0,
           sumTokens = 0,
           sumUsd = 0;
+
         tbody.innerHTML = data
-          .map((item) => {
-            const tokens = item.points * rate;
+          .map((item, index) => {
+            const effectivePoints = item.points * (item.roleMultiplier || 1);
+            const tokens = effectivePoints * rate;
             const usdValue = tokens * currentActivePrice;
+
             sumPoints += item.points;
             sumTokens += tokens;
             sumUsd += usdValue;
+
             const displayId = item.id.startsWith("0x")
               ? item.id.substring(0, 8) +
                 "..." +
                 item.id.substring(item.id.length - 4)
               : item.id;
+
             return `
             <tr class="hover:bg-cyan-500/5 transition-colors group">
-                <td class="p-5 font-bold text-slate-500 italic">#${
+                <td class="p-4 md:p-5 font-bold text-slate-500 italic">#${
                   item.rank
                 }</td>
-                <td class="p-5 text-slate-400 font-bold group-hover:text-cyan-400 transition-colors uppercase tracking-tighter">${displayId}</td>
-                <td class="p-5 font-black text-slate-300 text-right">${item.points.toLocaleString()}</td>
-                <td class="p-5 font-black text-cyan-400 text-sm italic text-right">${Math.round(
+                <td class="p-4 md:p-5 text-slate-400 font-bold group-hover:text-cyan-400 transition-colors uppercase tracking-tighter">${displayId}</td>
+                <td class="p-4 md:p-5 font-black text-slate-300 text-right text-sm md:text-base">${item.points.toLocaleString()}</td>
+                <td class="p-4 md:p-5 text-center">
+                    <select class="table-select" onchange="updateRowRole(${index}, this.value)">
+                        <option value="1" ${
+                          item.roleMultiplier === 1 ? "selected" : ""
+                        }>No Role (0%)</option>
+                        <option value="1.1" ${
+                          item.roleMultiplier === 1.1 ? "selected" : ""
+                        }>Deepest (+10%)</option>
+                        <option value="1.15" ${
+                          item.roleMultiplier === 1.15 ? "selected" : ""
+                        }>Explorer (+15%)</option>
+                        <option value="1.2" ${
+                          item.roleMultiplier === 1.2 ? "selected" : ""
+                        }>Diver (+20%)</option>
+                    </select>
+                </td>
+                <td class="p-4 md:p-5 font-black text-cyan-400 italic text-right text-base md:text-lg">${Math.round(
                   tokens
                 ).toLocaleString()}</td>
-                <td class="p-5 font-black text-green-400 text-sm italic text-right">$${usdValue.toLocaleString(
+                <td class="p-4 md:p-5 font-black text-green-400 italic text-right text-base md:text-lg">$${usdValue.toLocaleString(
                   undefined,
                   { minimumFractionDigits: 1, maximumFractionDigits: 2 }
                 )}</td>
             </tr>`;
           })
           .join("");
+
         document.getElementById("total-points").innerText =
           sumPoints.toLocaleString();
         document.getElementById("total-tokens").innerText =
@@ -603,9 +1024,11 @@
           });
       }
 
+      // Khởi tạo
+      document.getElementById("quick-price").value = livePrice;
+      document.getElementById("summary-price").value = livePrice;
       fetchPrice();
-      // Cập nhật giá mỗi 5 giây cho Real-time
-      setInterval(fetchPrice, 5000);
+      setInterval(fetchPrice, 10000);
     </script>
   </body>
 </html>
